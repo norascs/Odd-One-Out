@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://unpkg.com/jspsych@7.2.3"></script>
+        <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@1.1.1"></script>
+        <link href="https://unpkg.com/jspsych@7.2.3/css/jspsych.css" rel="stylesheet" type="text/css" />
+        <script src="https://unpkg.com/@jspsych/plugin-image-button-response@1.1.1"></script>1
+        <link href="https://unpkg.com/jspsych@7.2.3/css/jspsych.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+    </body>
+    <script>
+
+
+var jsPsych = initJsPsych();
+
+var timeline = [];
+
+var welcome = {
+  type: jsPsychHtmlKeyboardResponse,
+  stimulus: "Welcome to the experiment. Press any button to begin."
+};
+
+timeline.push(welcome)
+
+
+var instructions = {
+  type: jsPsychHtmlKeyboardResponse,
+  stimulus: "[Insert instructions.] Press <strong> enter </strong> to begin",
+  choices: ['enter'],
+};
+
+timeline.push(instructions)
+
+
+var trial = {
+    type: jsPsychImageButtonResponse,
+    stimulus: ['broadcast.png'] ,
+    choices: ['Farm', 'Broadcast', 'Table'],
+    prompt: "<p>Which is the odd one out?</p>"
+};
+timeline.push(trial);
+
+
+var trial1 = {
+    type: jsPsychImageButtonResponse,
+    stimulus: ['006.png'] ,
+    choices: ['Car', 'Boat', 'Train'],
+    prompt: "<p>Which is the odd one out?</p>"
+};
+timeline.push(trial1);
+
+var ending = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `
+        <p>Thank you, the experiment is now over. You may close this tab.</p>
+        <div style='width: 700px;'>
+        <div style='float: left;'>
+      `,
+      choices: ['enter'],
+      on_finish: function() {
+        jsPsych.data.displayData('csv');
+      }
+    };
+    timeline.push(ending);
+
+jsPsych.run(timeline);
+</script>
+</html>
